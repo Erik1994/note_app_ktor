@@ -59,10 +59,10 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$ui_ktx_version"
 
     //room
-    implementation("androidx.room:room-runtime:$room_version")
+    implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     // Kotlin Extensions and Coroutines support for Room
-    implementation "androidx.room:room-ktx:2.3.0"
+    implementation "androidx.room:room-ktx:$room_version"
 
     //retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -88,6 +88,9 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$glide_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
+    //datastore
+    implementation "androidx.datastore:datastore-preferences:$datastore_version"
+
     //markwon
     implementation "io.noties.markwon:core:4.4.0"
 
@@ -95,8 +98,6 @@ dependencies {
     implementation "com.github.skydoves:colorpickerview:2.1.7"
 
     implementation "androidx.security:security-crypto:1.1.0-alpha03"
-
-    implementation "androidx.datastore:datastore-preferences:1.0.0"
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
