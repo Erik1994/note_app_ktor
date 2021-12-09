@@ -12,6 +12,6 @@ import com.example.mynotes.data.model.entity.NoteEntity
     version = 1
 )
 @TypeConverters(Converters::class)
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract fun noteDao(): NoteDao
 }
