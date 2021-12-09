@@ -14,7 +14,7 @@ class AuthTokenInterceptor(private val sharedPreferences: SharedPreferences) : I
     override fun intercept(chain: Interceptor.Chain): Response {
         val token = sharedPreferences.get(TOKEN_KEY, "")
         val request = chain.request()
-        if(request.url.encodedPath in IGNORE_AUTH_URLS) {
+        if (request.url.encodedPath in IGNORE_AUTH_URLS) {
             return chain.proceed(request)
         }
         val authenticatedRequest = request.newBuilder()

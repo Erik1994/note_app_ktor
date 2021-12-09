@@ -2,7 +2,6 @@ package com.example.mynotes.data.extensions
 
 import android.content.SharedPreferences
 
-const val PREFS_NAME = "my_notes"
 
 inline fun <reified T> SharedPreferences.get(key: String, defaultValue: T): T {
     when(T::class) {

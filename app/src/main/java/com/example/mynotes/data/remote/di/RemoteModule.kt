@@ -1,5 +1,9 @@
 package com.example.mynotes.data.remote.di
 
+import com.example.mynotes.data.remote.datasource.datasourceimpl.AddEditNoteRemoteDataSourceImpl
+import com.example.mynotes.data.remote.datasource.datasourceimpl.AuthRemoteDataSourceImpl
+import com.example.mynotes.data.remote.datasource.datasourceimpl.NoteDetailRemoteDataSourceImpl
+import com.example.mynotes.data.remote.datasource.datasourceimpl.NotesRemoteDataSourceImpl
 import com.example.mynotes.data.remote.network.ApiClients
 import com.example.mynotes.data.remote.network.interceptor.AuthTokenInterceptor
 import okhttp3.Interceptor
@@ -9,8 +13,10 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import kotlin.math.sin
 
 fun remoteModule(baseUrl: String) = module {
+
     factory<Interceptor> {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.apply {
@@ -50,5 +56,10 @@ fun remoteModule(baseUrl: String) = module {
     factory {
         get<Retrofit>().create(ApiClients::class.java)
     }
+
+    single { AddEditNoteRemoteDataSourceImpl(get()) }
+    single { NoteDetailRemoteDataSourceImpl(get()) }
+    single { AuthRemoteDataSourceImpl(get()) }
+    single { NotesRemoteDataSourceImpl(get()) }
 
 }
