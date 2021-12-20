@@ -63,9 +63,9 @@ fun remoteModule(baseUrl: String) = module {
         get<Retrofit>().create(ApiClients::class.java)
     }
 
-    single { ConnectionManager(get()) }
-    single<AddEditNoteRemoteDataSource> { AddEditNoteRemoteDataSourceImpl(get()) }
-    single<NoteDetailRemoteDataSource> { NoteDetailRemoteDataSourceImpl(get()) }
-    single<AuthRemoteDataSource> { AuthRemoteDataSourceImpl(get(), get()) }
-    single<NotesRemoteDataSource> { NotesRemoteDataSourceImpl(get()) }
+    single { ConnectionManager(context = get()) }
+    single<AddEditNoteRemoteDataSource> { AddEditNoteRemoteDataSourceImpl(apiClients = get()) }
+    single<NoteDetailRemoteDataSource> { NoteDetailRemoteDataSourceImpl(apiClients = get()) }
+    single<AuthRemoteDataSource> { AuthRemoteDataSourceImpl(apiClients = get()) }
+    single<NotesRemoteDataSource> { NotesRemoteDataSourceImpl(apiClients = get()) }
 }

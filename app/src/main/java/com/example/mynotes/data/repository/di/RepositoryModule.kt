@@ -11,8 +11,32 @@ import com.example.mynotes.data.repository.repositoryimpl.NotesDetailDataReposit
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    factory<AddEditNoteDataRepository> { AddEditNoteDataRepositoryImpl(get(), get(), get()) }
-    factory<AuthDataRepository> { AuthDataRepositoryImpl(get(), get()) }
-    factory<NotesDataRepository> { NotesDataRepositoryImpl(get(), get(), get()) }
-    factory<NotesDetailDataRepository> { NotesDetailDataRepositoryImpl(get(), get(), get()) }
+    factory<AddEditNoteDataRepository> {
+        AddEditNoteDataRepositoryImpl(
+            connectionManager = get(),
+            localDataSource = get(),
+            remoteDataSource = get()
+        )
+    }
+    factory<AuthDataRepository> {
+        AuthDataRepositoryImpl(
+            connectionManager = get(),
+            localDataSource = get(),
+            remoteDataSource = get()
+        )
+    }
+    factory<NotesDataRepository> {
+        NotesDataRepositoryImpl(
+            connectionManager = get(),
+            localDataSource = get(),
+            remoteDataSource = get()
+        )
+    }
+    factory<NotesDetailDataRepository> {
+        NotesDetailDataRepositoryImpl(
+            connectionManager = get(),
+            localDataSource = get(),
+            remoteDataSource = get()
+        )
+    }
 }

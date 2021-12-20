@@ -1,5 +1,6 @@
 package com.example.mynotes.data.model.request
 
+import com.example.mynotes.ui.extensions.emptyString
 import com.google.gson.annotations.SerializedName
 
 data class AccountRequest(
@@ -8,5 +9,5 @@ data class AccountRequest(
     @SerializedName("password")
     val password: String,
     @Transient
-    val repeatedPassword: String
+    val repeatedPassword: String = emptyString()
 )

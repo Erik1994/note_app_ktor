@@ -48,7 +48,7 @@ class AuthFragment : BaseFragment(R.layout.fragment_auth) {
                         registerProgressBar.hide()
                         showSnackbar(
                             result.message
-                                ?: getString(R.string.registration_sccess_message)
+                                ?: getString(R.string.unknown_error)
                         )
                     }
                     is Resource.Success -> {
@@ -58,6 +58,27 @@ class AuthFragment : BaseFragment(R.layout.fragment_auth) {
                     }
                     is Resource.Loading -> {
                         registerProgressBar.show()
+                    }
+                }
+            }
+
+            collectLifeCycleFlow(viewModel.loginSharedFlow) { result ->
+                when (result) {
+                    is Resource.Error -> {
+                        loginProgressBar.hide()
+                        showSnackbar(
+                            result.message
+                                ?: getString(R.string.unknown_error)
+                        )
+                    }
+                    is Resource.Success -> {
+                        loginProgressBar.hide()
+                        showSnackbar(result.data.message.takeIf { it.isNotEmpty() }
+                            ?: getString(R.string.login_sccess_message))
+                        viewModel.navigate(AuthFragmentDirections.actionAuthFragmentToNotesFragment())
+                    }
+                    is Resource.Loading -> {
+                        loginProgressBar.show()
                     }
                 }
             }
@@ -77,6 +98,17 @@ class AuthFragment : BaseFragment(R.layout.fragment_auth) {
                         email,
                         password,
                         confirmedPassword
+                    )
+                }.flowOn(Dispatchers.Main.immediate)
+                .launchIn(viewLifecycleOwner.lifecycleScope)
+
+            btnLogin.debounceClicks()
+                .onEach {
+                    val email = etLoginEmail.text.toString()
+                    val password = etLoginPassword.text.toString()
+                    viewModel.login(
+                        email,
+                        password
                     )
                 }.flowOn(Dispatchers.Main.immediate)
                 .launchIn(viewLifecycleOwner.lifecycleScope)

@@ -12,7 +12,6 @@ sealed class Resource<out T> {
         val code: Int? = null
     ) : Resource<T>()
 
-    //object Loading : Resource<Nothing>()
     data class Loading<out T>(
         val data: T?
     ) : Resource<T>()
