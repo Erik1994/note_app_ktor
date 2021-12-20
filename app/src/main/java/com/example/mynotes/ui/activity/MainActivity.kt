@@ -1,10 +1,11 @@
 package com.example.mynotes.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.mynotes.R
+import com.example.mynotes.ui.common.BaseActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
+    //private var binding: ActivityMainBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

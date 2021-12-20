@@ -7,10 +7,13 @@ sealed class Resource<out T> {
     ) : Resource<T>()
 
     data class Error<out T>(
-        val exception: Exception,
+        val message: String? = null,
         val data: T?,
         val code: Int? = null
     ) : Resource<T>()
 
-    object Loading : Resource<Nothing>()
+    //object Loading : Resource<Nothing>()
+    data class Loading<out T>(
+        val data: T?
+    ) : Resource<T>()
 }

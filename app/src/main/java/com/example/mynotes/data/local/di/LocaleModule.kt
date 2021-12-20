@@ -7,6 +7,10 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.example.mynotes.data.local.APP_DATABASE
 import com.example.mynotes.data.local.PREFS_NAME
+import com.example.mynotes.data.local.datasource.AddEditNoteLocalDataSource
+import com.example.mynotes.data.local.datasource.AuthLocalDataSource
+import com.example.mynotes.data.local.datasource.NoteDetailLocalDataSource
+import com.example.mynotes.data.local.datasource.NotesLocalDataSource
 import com.example.mynotes.data.local.datasource.datasourceimpl.AddEditNoteLocalDataSourceImpl
 import com.example.mynotes.data.local.datasource.datasourceimpl.AuthLocalDataSourceImpl
 import com.example.mynotes.data.local.datasource.datasourceimpl.NoteDetailLocalDataSourceImpl
@@ -14,7 +18,6 @@ import com.example.mynotes.data.local.datasource.datasourceimpl.NotesLocalDataSo
 import com.example.mynotes.data.local.db.AppDatabase
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
-import kotlin.math.sin
 
 val localModule = module {
 
@@ -49,8 +52,8 @@ val localModule = module {
 
     fun provideNoteDao(database: AppDatabase) = database.noteDao()
     single { provideNoteDao(get()) }
-    single { AddEditNoteLocalDataSourceImpl(get(), get()) }
-    single { NoteDetailLocalDataSourceImpl(get(), get()) }
-    single { AuthLocalDataSourceImpl(get(), get()) }
-    single { NotesLocalDataSourceImpl(get(), get()) }
+    factory<AddEditNoteLocalDataSource> { AddEditNoteLocalDataSourceImpl(get(), get()) }
+    single<NoteDetailLocalDataSource> { NoteDetailLocalDataSourceImpl(get(), get()) }
+    single<AuthLocalDataSource> { AuthLocalDataSourceImpl(get(), get()) }
+    single<NotesLocalDataSource> { NotesLocalDataSourceImpl(get(), get()) }
 }

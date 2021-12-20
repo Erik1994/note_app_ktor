@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">My Notes</string>
+    <string name="internet_connection_error">No internet connection!!!</string>
+    <string name="fetch_data_error">Cannot fetch data from server!!!</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="empty_field_message">Please fill out all the fields</string>
+    <string name="passwords_mismatch_message">The passwords so not match</string>
+    <string name="registration_sccess_message">Successfully registered an account</string>
 </resources>

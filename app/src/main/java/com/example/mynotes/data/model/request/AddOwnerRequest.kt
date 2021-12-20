@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class AddOwnerRequest(
     @SerializedName("owner")
-    val ownerEmail: String?,
+    val ownerEmail: String,
     @SerializedName("noteId")
-    val noteId: String?
+    val noteId: String
 )

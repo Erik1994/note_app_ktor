@@ -1,11 +1,17 @@
 package com.example.mynotes.data.remote.di
 
+import com.example.mynotes.data.remote.datasource.AddEditNoteRemoteDataSource
+import com.example.mynotes.data.remote.datasource.AuthRemoteDataSource
+import com.example.mynotes.data.remote.datasource.NoteDetailRemoteDataSource
+import com.example.mynotes.data.remote.datasource.NotesRemoteDataSource
 import com.example.mynotes.data.remote.datasource.datasourceimpl.AddEditNoteRemoteDataSourceImpl
 import com.example.mynotes.data.remote.datasource.datasourceimpl.AuthRemoteDataSourceImpl
 import com.example.mynotes.data.remote.datasource.datasourceimpl.NoteDetailRemoteDataSourceImpl
 import com.example.mynotes.data.remote.datasource.datasourceimpl.NotesRemoteDataSourceImpl
 import com.example.mynotes.data.remote.network.ApiClients
 import com.example.mynotes.data.remote.network.interceptor.AuthTokenInterceptor
+import com.example.mynotes.data.remote.network.interceptor.ContentTypeInterceptor
+import com.example.mynotes.data.repository.util.ConnectionManager
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -13,7 +19,6 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import kotlin.math.sin
 
 fun remoteModule(baseUrl: String) = module {
 
@@ -32,15 +37,16 @@ fun remoteModule(baseUrl: String) = module {
 //    single {
 //        return@single HeaderInterceptor(get())
 //    }
-//
-//    single {
-//        return@single ContentTypeInterceptor()
-//    }
+
+    single {
+        return@single ContentTypeInterceptor()
+    }
 
     factory {
         OkHttpClient.Builder().readTimeout(100, TimeUnit.SECONDS)
             .connectTimeout(100, TimeUnit.SECONDS)
             .addInterceptor(get<Interceptor>())
+            .addInterceptor(get<ContentTypeInterceptor>())
             .addInterceptor(get<AuthTokenInterceptor>())
             .build()
     }
@@ -57,9 +63,9 @@ fun remoteModule(baseUrl: String) = module {
         get<Retrofit>().create(ApiClients::class.java)
     }
 
-    single { AddEditNoteRemoteDataSourceImpl(get()) }
-    single { NoteDetailRemoteDataSourceImpl(get()) }
-    single { AuthRemoteDataSourceImpl(get()) }
-    single { NotesRemoteDataSourceImpl(get()) }
-
+    single { ConnectionManager(get()) }
+    single<AddEditNoteRemoteDataSource> { AddEditNoteRemoteDataSourceImpl(get()) }
+    single<NoteDetailRemoteDataSource> { NoteDetailRemoteDataSourceImpl(get()) }
+    single<AuthRemoteDataSource> { AuthRemoteDataSourceImpl(get(), get()) }
+    single<NotesRemoteDataSource> { NotesRemoteDataSourceImpl(get()) }
 }

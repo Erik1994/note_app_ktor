@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class DeleteNoteRequest(
     @SerializedName("id")
-    val noteId: String?
+    val noteId: String
 )

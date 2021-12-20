@@ -1,15 +1,14 @@
 package com.example.mynotes.data.local.db.converter
 
 import androidx.room.TypeConverter
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.example.mynotes.ui.extensions.fromJson
+import com.example.mynotes.ui.extensions.toJson
 
 class Converters {
 
     @TypeConverter
-    fun fromList(list: List<String>): String = Gson().toJson(list)
+    fun fromList(list: List<String>): String = list.toJson()
 
     @TypeConverter
-    fun toList(string: String): List<String> =
-        Gson().fromJson(string, object : TypeToken<List<String>>() {}.type)
+    fun toList(string: String): List<String> = string.fromJson()
 }

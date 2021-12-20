@@ -1,6 +1,6 @@
 package com.example.mynotes.data.remote
 
-const val BASE_URL = "http://0.0.0.0:8001"
+const val BASE_URL = "http://192.168.5.60:8001"
 const val REGISTER = "/register"
 const val LOGIN = "/login"
 const val GET_NOTES = "/getNotes"
