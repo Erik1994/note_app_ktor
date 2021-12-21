@@ -1,9 +1,7 @@
 package com.example.mynotes.ui.features.notes
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.example.mynotes.R
 import com.example.mynotes.databinding.FragmentNotesBinding
 import com.example.mynotes.ui.common.BaseFragment
@@ -18,6 +16,7 @@ class NotesFragment: BaseFragment(R.layout.fragment_notes) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         if(binding == null) {
             binding = FragmentNotesBinding.inflate(layoutInflater, container, false)
         }
@@ -26,5 +25,20 @@ class NotesFragment: BaseFragment(R.layout.fragment_notes) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_notes, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.logout -> {
+                viewModel.deleteToken()
+                logOut()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

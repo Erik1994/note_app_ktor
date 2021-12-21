@@ -9,10 +9,15 @@ import org.koin.dsl.module
 
 val featureModule = module {
     viewModel {
-        AuthViewModel(appDispatchers = get(), registerUseCase = get(), loginUseCase = get())
+        AuthViewModel(
+            appDispatchers = get(),
+            registerUseCase = get(),
+            loginUseCase = get(),
+            checkLoginUseCase = get()
+        )
     }
     viewModel {
-        NotesViewModel()
+        NotesViewModel(deleteTokenUseCase = get())
     }
     viewModel {
         NoteDetailViewModel()

@@ -11,7 +11,9 @@ import com.example.mynotes.data.remote.datasource.datasourceimpl.NotesRemoteData
 import com.example.mynotes.data.remote.network.ApiClients
 import com.example.mynotes.data.remote.network.interceptor.AuthTokenInterceptor
 import com.example.mynotes.data.remote.network.interceptor.ContentTypeInterceptor
+import com.example.mynotes.data.remote.network.interceptor.TokenExpiredInterceptor
 import com.example.mynotes.data.repository.util.ConnectionManager
+import com.example.mynotes.data.repository.util.EventManager
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -31,7 +33,7 @@ fun remoteModule(baseUrl: String) = module {
     }
 
     single {
-        return@single AuthTokenInterceptor(get())
+        return@single AuthTokenInterceptor(sharedPreferences = get())
     }
 
 //    single {
@@ -42,12 +44,23 @@ fun remoteModule(baseUrl: String) = module {
         return@single ContentTypeInterceptor()
     }
 
+
+    single {
+        return@single TokenExpiredInterceptor(
+            eventManager = get(),
+            coroutineScope = get(),
+            context = get(),
+            sharedPreferences = get()
+        )
+    }
+
     factory {
         OkHttpClient.Builder().readTimeout(100, TimeUnit.SECONDS)
             .connectTimeout(100, TimeUnit.SECONDS)
             .addInterceptor(get<Interceptor>())
             .addInterceptor(get<ContentTypeInterceptor>())
             .addInterceptor(get<AuthTokenInterceptor>())
+            .addInterceptor(get<TokenExpiredInterceptor>())
             .build()
     }
 
@@ -63,7 +76,6 @@ fun remoteModule(baseUrl: String) = module {
         get<Retrofit>().create(ApiClients::class.java)
     }
 
-    single { ConnectionManager(context = get()) }
     single<AddEditNoteRemoteDataSource> { AddEditNoteRemoteDataSourceImpl(apiClients = get()) }
     single<NoteDetailRemoteDataSource> { NoteDetailRemoteDataSourceImpl(apiClients = get()) }
     single<AuthRemoteDataSource> { AuthRemoteDataSourceImpl(apiClients = get()) }

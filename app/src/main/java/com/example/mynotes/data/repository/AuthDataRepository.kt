@@ -8,4 +8,5 @@ import kotlinx.coroutines.flow.Flow
 interface AuthDataRepository {
     fun register(accountRequest: AccountRequest): Flow<Resource<SimpleData>>
     fun login(accountRequest: AccountRequest): Flow<Resource<SimpleData>>
+    fun isLoggedIn(): Boolean
 }

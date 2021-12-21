@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
     app:startDestination="@id/authFragment">
-
+    <action
+        android:id="@+id/action_global_authFragment"
+        app:destination="@+id/authFragment"
+        app:popUpTo="@id/authFragment" />
     <fragment
         android:id="@+id/addEditNoteFragment"
         android:name="com.example.mynotes.ui.features.addeditnote.AddEditNoteFragment"
@@ -45,6 +48,8 @@
             app:destination="@id/noteDetailFragment" />
         <action
             android:id="@+id/action_notesFragment_to_authFragment"
-            app:destination="@id/authFragment" />
+            app:destination="@id/authFragment"
+            app:popUpTo="@id/notesFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

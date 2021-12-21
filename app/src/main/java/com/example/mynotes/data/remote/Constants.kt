@@ -13,5 +13,5 @@ const val CONTENT_TYPE = "application/json"
 const val BEARER = "Bearer "
 const val UNAUTHORIZED_CODE = 401
 object Constants {
-    val IGNORE_AUTH_URLS = listOf(LOGIN, REGISTER)
+    val IGNORE_AUTH_URLS = listOf(REGISTER)
 }

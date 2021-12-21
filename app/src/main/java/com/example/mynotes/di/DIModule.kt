@@ -8,6 +8,7 @@ import com.example.mynotes.domain.di.domainModule
 import com.example.mynotes.ui.features.di.featureModule
 
 val diModule = listOf(
+    appModule,
     localModule,
     remoteModule(baseUrl = BASE_URL),
     repositoryModule,

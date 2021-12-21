@@ -5,6 +5,7 @@ import com.example.mynotes.data.model.data.SimpleData
 import com.example.mynotes.data.model.request.AccountRequest
 import com.example.mynotes.data.repository.util.Resource
 import com.example.mynotes.domain.dispatchers.AppDispatchers
+import com.example.mynotes.domain.usecase.CheckLoginUseCase
 import com.example.mynotes.domain.usecase.LoginUseCase
 import com.example.mynotes.domain.usecase.RegisterUseCase
 import com.example.mynotes.ui.common.BaseViewModel
@@ -15,7 +16,8 @@ import kotlinx.coroutines.launch
 class AuthViewModel(
     private val appDispatchers: AppDispatchers,
     private val registerUseCase: RegisterUseCase,
-    private val loginUseCase: LoginUseCase
+    private val loginUseCase: LoginUseCase,
+    private val checkLoginUseCase: CheckLoginUseCase
 ) : BaseViewModel() {
     private val _registerSharedFlow = MutableSharedFlow<Resource<SimpleData>>(
         replay = 1,
@@ -49,5 +51,7 @@ class AuthViewModel(
         val accountRequest = AccountRequest(email, password)
         _loginStateFlow.emitAll(loginUseCase(accountRequest))
     }
+
+    fun isLoggedIn() = checkLoginUseCase()
 
 }

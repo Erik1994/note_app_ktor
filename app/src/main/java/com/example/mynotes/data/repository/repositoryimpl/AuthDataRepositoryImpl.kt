@@ -1,6 +1,7 @@
 package com.example.mynotes.data.repository.repositoryimpl
 
 import android.content.Context
+import android.util.Log
 import com.example.mynotes.R
 import com.example.mynotes.data.emailPassValidation
 import com.example.mynotes.data.local.datasource.AuthLocalDataSource
@@ -70,6 +71,7 @@ class AuthDataRepositoryImpl(
                 if (response.isSuccessful && response.body()?.successful == true) {
                     response.body()?.let {
                         it.token?.takeIf { token -> token.isNotEmpty() }?.let { token ->
+                            Log.d("TOKENTAG", "Token: $token")
                             localDataSource.saveToken(token)
                         }
                         emit(Resource.Success(TOKEN_RESPONSE_TO_DATA_MAPPER.map(it)))
@@ -88,6 +90,8 @@ class AuthDataRepositoryImpl(
             }
         }
     }
+
+    override fun isLoggedIn(): Boolean = localDataSource.isLoggedIn()
 
     private fun getErrorMessage(context: Context, e: Exception) =
         if (connectionManager.checkNetworkConnection()) {

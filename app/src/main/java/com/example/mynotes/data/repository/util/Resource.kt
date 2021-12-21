@@ -1,5 +1,7 @@
 package com.example.mynotes.data.repository.util
 
+import com.example.mynotes.ui.extensions.emptyString
+
 sealed class Resource<out T> {
     data class Success<out T>(
         val data: T,
@@ -15,4 +17,8 @@ sealed class Resource<out T> {
     data class Loading<out T>(
         val data: T?
     ) : Resource<T>()
+}
+
+sealed class Events {
+    data class LogOutEvent(val message: String = emptyString()) : Events()
 }

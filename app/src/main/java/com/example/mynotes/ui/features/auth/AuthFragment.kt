@@ -1,10 +1,12 @@
 package com.example.mynotes.ui.features.auth
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.mynotes.R
 import com.example.mynotes.data.repository.util.Resource
 import com.example.mynotes.databinding.FragmentAuthBinding
@@ -36,9 +38,15 @@ class AuthFragment : BaseFragment(R.layout.fragment_auth) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        checkLoggedIn()
         observeDate()
         observeClicks()
     }
+
+    private fun checkLoggedIn() = if(viewModel.isLoggedIn()) {
+        Log.d("TOKENTAG", "IsLogged: ${viewModel.isLoggedIn()}")
+        findNavController().navigate(AuthFragmentDirections.actionAuthFragmentToNotesFragment())
+    } else Unit
 
     private fun observeDate() {
         binding?.apply {

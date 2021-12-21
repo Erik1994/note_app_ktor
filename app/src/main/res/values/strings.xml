@@ -7,4 +7,6 @@
     <string name="passwords_mismatch_message">The passwords so not match</string>
     <string name="registration_sccess_message">Successfully registered an account</string>
     <string name="login_sccess_message">Successfully logged in</string>
+    <string name="logout">Logout</string>
+    <string name="token_expire_message">Token expired!!!</string>
 </resources>

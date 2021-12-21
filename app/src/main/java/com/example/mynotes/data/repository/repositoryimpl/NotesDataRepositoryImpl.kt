@@ -10,4 +10,5 @@ class NotesDataRepositoryImpl(
     private val localDataSource: NotesLocalDataSource,
     private val remoteDataSource: NotesRemoteDataSource
 ) : NotesDataRepository {
+    override fun deleteToken() = localDataSource.deleteToken()
 }
