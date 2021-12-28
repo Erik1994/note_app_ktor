@@ -1,5 +1,6 @@
 package com.example.mynotes.ui.features.auth
 
+import android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -22,6 +23,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AuthFragment : BaseFragment(R.layout.fragment_auth) {
     private var binding: FragmentAuthBinding? = null
+    override var orientation: Int = SCREEN_ORIENTATION_PORTRAIT
     override val viewModel: AuthViewModel by viewModel()
 
     override fun onCreateView(

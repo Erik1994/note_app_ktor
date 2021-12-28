@@ -1,5 +1,6 @@
 package com.example.mynotes.ui.common
 
+import android.content.pm.ActivityInfo.SCREEN_ORIENTATION_USER
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -17,6 +18,12 @@ import org.koin.android.ext.android.inject
 abstract class BaseFragment(layoutId: Int) : Fragment(layoutId) {
     protected abstract val viewModel: BaseViewModel
     private val eventManager: EventManager by inject()
+    protected open var orientation: Int = SCREEN_ORIENTATION_USER
+        set(value) {
+            field = value
+            requireActivity().requestedOrientation = value
+        }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -1,6 +1,8 @@
 package com.example.mynotes.ui.extensions
 
+import android.graphics.drawable.Drawable
 import android.view.View
+import androidx.core.graphics.drawable.DrawableCompat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.ProducerScope
@@ -29,6 +31,12 @@ fun <T> ProducerScope<T>.safeOffer(element: T) {
     if (!isClosedForSend) {
         trySend(element)
     }
+}
+
+fun Drawable.changeDrawableColor(color: Int): Drawable {
+    val wrappedDrawable = DrawableCompat.wrap(this)
+    DrawableCompat.setTint(wrappedDrawable, color)
+    return this
 }
 
 

@@ -9,4 +9,6 @@
     <string name="login_sccess_message">Successfully logged in</string>
     <string name="logout">Logout</string>
     <string name="token_expire_message">Token expired!!!</string>
+    <string name="not_synced">Not Synced</string>
+    <string name="synced">Synced</string>
 </resources>

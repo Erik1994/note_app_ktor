@@ -1,5 +1,6 @@
 import com.example.mynotes.R
 import com.example.mynotes.data.local.db.mapper.Mapper
+import com.example.mynotes.data.local.db.mapper.MapperDataHolder
 import com.example.mynotes.data.repository.util.ConnectionManager
 import com.example.mynotes.data.repository.util.Resource
 import kotlinx.coroutines.flow.*
@@ -37,8 +38,8 @@ inline fun <RESPONSE, RESULT> safeApiCall(
     }
 }
 
-inline fun <RESULT, RESPONSE> safeCashedApiCall(
-    mapper: Mapper<RESPONSE, RESULT>,
+inline fun <RESPONSE, RESULT> safeCashedApiCall(
+    mapper: Mapper<MapperDataHolder<RESPONSE>, RESULT>,
     connectionManager: ConnectionManager,
     crossinline dbQuery: () -> Flow<RESULT>,
     crossinline apiCall: suspend () -> Response<RESPONSE>,
@@ -55,7 +56,7 @@ inline fun <RESULT, RESPONSE> safeCashedApiCall(
             val responseResult = apiCall.invoke()
             if (responseResult.isSuccessful) {
                 responseResult.body()?.let {
-                    dbSaver.invoke(mapper.map(it))
+                    dbSaver.invoke(mapper.map(MapperDataHolder((it))))
                 }
             }
             dbQuery.invoke().map { Resource.Success(it) }

@@ -10,3 +10,5 @@ interface Mapper<SOURCE, RESULT> {
 
     fun mapIfNotNull(source: List<SOURCE>?): List<RESULT>? = source?.run { map(this) }
 }
+
+data class MapperDataHolder<out SOURCE> (val data: SOURCE)

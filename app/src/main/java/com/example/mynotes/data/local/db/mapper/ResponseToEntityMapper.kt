@@ -15,8 +15,8 @@ val NOTE_RESPONSE_TO_ENTITY_MAPPER = object : Mapper<NoteResponse, NoteEntity> {
 }
 
 
-val NOTES_RESPONSE_TO_ENTITY_MAPPER = object : Mapper<List<NoteResponse>, List<NoteEntity>> {
-    override fun map(source: List<NoteResponse>) = source.map {
+val NOTES_RESPONSE_TO_ENTITY_MAPPER = object : Mapper<MapperDataHolder<List<NoteResponse>>, List<NoteEntity>> {
+    override fun map(source: MapperDataHolder<List<NoteResponse>>): List<NoteEntity> = source.data.map {
         NOTE_RESPONSE_TO_ENTITY_MAPPER.map(it)
     }
 }
