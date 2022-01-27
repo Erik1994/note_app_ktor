@@ -97,8 +97,8 @@ class AuthFragment : BaseFragment(R.layout.fragment_auth) {
 
     @ExperimentalCoroutinesApi
     @FlowPreview
-    private fun observeClicks() {
-        binding?.apply {
+    private fun observeClicks() = binding?.let{ binding ->
+        with(binding) {
             btnRegister.debounceClicks()
                 .onEach {
                     val email = etRegisterEmail.text.toString()

@@ -74,6 +74,7 @@ class AuthDataRepositoryImpl(
                             Log.d("TOKENTAG", "Token: $token")
                             localDataSource.saveToken(token)
                         }
+                        localDataSource.saveEmail(accountRequest.email)
                         emit(Resource.Success(TOKEN_RESPONSE_TO_DATA_MAPPER.map(it)))
                     }
                 } else {

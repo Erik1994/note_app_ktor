@@ -36,7 +36,7 @@ fun <T> ProducerScope<T>.safeOffer(element: T) {
 fun Drawable.changeDrawableColor(color: Int): Drawable {
     val wrappedDrawable = DrawableCompat.wrap(this)
     DrawableCompat.setTint(wrappedDrawable, color)
-    return this
+    return wrappedDrawable
 }
 
 

@@ -38,6 +38,35 @@ inline fun <RESPONSE, RESULT> safeApiCall(
     }
 }
 
+
+inline fun <RESPONSE> safeApiCall(
+    connectionManager: ConnectionManager,
+    crossinline apiCall: suspend () -> Response<RESPONSE>,
+    crossinline onFetchFailed: (Throwable) -> Unit = {}
+): Flow<Resource<RESPONSE>> = flow {
+    emit(Resource.Loading(null))
+    val context = connectionManager.context
+    try {
+        val response = apiCall.invoke()
+        if (response.isSuccessful) {
+            response.body()?.let {
+                emit(Resource.Success(it))
+            } ?: emit(Resource.Error(response.message(), null, response.code()))
+        } else {
+            emit(Resource.Error(response.message(), null, response.code()))
+            onFetchFailed.invoke(Exception(response.message()))
+        }
+    } catch (e: Exception) {
+        val errorMessage = if (connectionManager.checkNetworkConnection()) {
+            e.message
+        } else {
+            context.getString(R.string.internet_connection_error)
+        }
+        emit(Resource.Error(errorMessage, null))
+        onFetchFailed.invoke(e)
+    }
+}
+
 inline fun <RESPONSE, RESULT> safeCashedApiCall(
     mapper: Mapper<MapperDataHolder<RESPONSE>, RESULT>,
     connectionManager: ConnectionManager,

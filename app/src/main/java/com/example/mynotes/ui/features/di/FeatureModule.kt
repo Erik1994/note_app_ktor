@@ -10,6 +10,13 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val featureModule = module {
+    factory {
+        NotesAdapter(
+            coroutineScope = get(),
+            appDispatchers = get()
+        )
+    }
+
     viewModel {
         AuthViewModel(
             appDispatchers = get(),
@@ -32,15 +39,11 @@ val featureModule = module {
     }
 
     viewModel {
-        AddEditNoteViewModel()
-    }
-
-    scope<NotesFragment> {
-        scoped {
-            NotesAdapter(
-                coroutineScope = get(),
-                appDispatchers = get()
-            )
-        }
+        AddEditNoteViewModel(
+            appDispatchers = get(),
+            addNoteUseCase = get(),
+            getNoteByIdUseCase = get(),
+            getEmailUseCase = get()
+        )
     }
 }

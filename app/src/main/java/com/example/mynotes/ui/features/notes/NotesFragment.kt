@@ -9,20 +9,21 @@ import com.example.mynotes.data.repository.util.Resource
 import com.example.mynotes.databinding.FragmentNotesBinding
 import com.example.mynotes.ui.common.BaseFragment
 import com.example.mynotes.ui.extensions.collectLifeCycleFlow
+import com.example.mynotes.ui.extensions.debounceClicks
 import com.example.mynotes.ui.extensions.showSnackbar
 import com.example.mynotes.ui.features.notes.adapter.NotesAdapter
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import okhttp3.Dispatcher
-import org.koin.android.ext.android.inject
+import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NotesFragment: BaseFragment(R.layout.fragment_notes) {
     private var binding: FragmentNotesBinding? = null
     override val viewModel: NotesViewModel by viewModel()
-    private val notesAdapter: NotesAdapter by inject()
+    private val notesAdapter: NotesAdapter = get()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -89,12 +90,23 @@ class NotesFragment: BaseFragment(R.layout.fragment_notes) {
         }
     }
 
-    private fun observeClicks() {
+    @FlowPreview
+    private fun observeClicks() = binding?.let { binding ->
+        with(binding) {
+//            fabAddNote.debounceClicks()
+//                .onEach {
+//                    viewModel.navigate(NotesFragmentDirections.actionNotesFragmentToAddEditNoteFragment(""))
+//                }.flowOn(Dispatchers.Main.immediate)
+//                .launchIn(viewLifecycleOwner.lifecycleScope)
+            collectLifeCycleFlow(fabAddNote.debounceClicks()) {
+                viewModel.navigate(NotesFragmentDirections.actionNotesFragmentToAddEditNoteFragment(""))
+            }
+        }
         notesAdapter.clicksFlow()
             .onEach {
                 viewModel.navigate(NotesFragmentDirections.actionNotesFragmentToNoteDetailFragment(it.id))
             }.flowOn(Dispatchers.Main.immediate)
-            .launchIn(viewLifecycleOwner.lifecycleScope)
+            .launchIn(this.viewLifecycleOwner.lifecycleScope)
     }
 
     private fun initRv() = binding?.rvNotes?.apply {

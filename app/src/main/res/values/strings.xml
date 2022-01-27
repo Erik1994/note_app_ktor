@@ -11,4 +11,8 @@
     <string name="token_expire_message">Token expired!!!</string>
     <string name="not_synced">Not Synced</string>
     <string name="synced">Synced</string>
+    <string name="note_not_found">Note not found</string>
+    <string name="choose_color"> Choose a color</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
 </resources>

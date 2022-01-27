@@ -31,11 +31,13 @@ abstract class BaseFragment(layoutId: Int) : Fragment(layoutId) {
     }
 
     private fun observeNavigation() {
-        collectLifeCycleFlow(viewModel.navigationFlow) {
-            when (it) {
-                NavigationCommand.Back -> findNavController().navigateUp()
-                is NavigationCommand.To -> findNavController().navigate(it.direction)
-                is NavigationCommand.None -> Unit
+        collectLifeCycleFlow(viewModel.navigationFlow) { command ->
+            command?.let {
+                viewModel.setNavigationNull()
+                when (it) {
+                    is NavigationCommand.Back -> findNavController().navigateUp()
+                    is NavigationCommand.To -> findNavController().navigate(it.direction)
+                }
             }
         }
 
@@ -46,8 +48,9 @@ abstract class BaseFragment(layoutId: Int) : Fragment(layoutId) {
         }
     }
 
-    protected fun logOut(eventMessage: String = emptyString()) = eventMessage.takeIf { it.isNotEmpty() }?.let {
-        showSnackbar(it)
-        viewModel.navigate(AuthFragmentDirections.actionGlobalAuthFragment())
-    } ?: viewModel.navigate(NotesFragmentDirections.actionNotesFragmentToAuthFragment())
+    protected fun logOut(eventMessage: String = emptyString()) =
+        eventMessage.takeIf { it.isNotEmpty() }?.let {
+            showSnackbar(it)
+            viewModel.navigate(AuthFragmentDirections.actionGlobalAuthFragment())
+        } ?: viewModel.navigate(NotesFragmentDirections.actionNotesFragmentToAuthFragment())
 }

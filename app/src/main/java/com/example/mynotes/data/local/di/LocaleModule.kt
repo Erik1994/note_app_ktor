@@ -52,8 +52,23 @@ val localModule = module {
 
     fun provideNoteDao(database: AppDatabase) = database.noteDao()
     single { provideNoteDao(database = get()) }
-    factory<AddEditNoteLocalDataSource> { AddEditNoteLocalDataSourceImpl(noteDao = get(), sharedPreferences = get()) }
-    single<NoteDetailLocalDataSource> { NoteDetailLocalDataSourceImpl(noteDao = get(), sharedPreferences = get()) }
+    factory<AddEditNoteLocalDataSource> {
+        AddEditNoteLocalDataSourceImpl(
+            noteDao = get(),
+            sharedPreferences = get()
+        )
+    }
+    single<NoteDetailLocalDataSource> {
+        NoteDetailLocalDataSourceImpl(
+            noteDao = get(),
+            sharedPreferences = get()
+        )
+    }
     single<AuthLocalDataSource> { AuthLocalDataSourceImpl(sharedPreferences = get()) }
-    single<NotesLocalDataSource> { NotesLocalDataSourceImpl(noteDao = get(), sharedPreferences = get()) }
+    single<NotesLocalDataSource> {
+        NotesLocalDataSourceImpl(
+            noteDao = get(),
+            sharedPreferences = get()
+        )
+    }
 }

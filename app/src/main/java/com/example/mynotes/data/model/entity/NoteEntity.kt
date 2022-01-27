@@ -12,7 +12,7 @@ data class NoteEntity(
     val date: Long,
     val owners: List<String>,
     val color: String,
-    val isSynced: Boolean = false,
+    var isSynced: Boolean = false,
     @PrimaryKey(autoGenerate = false)
     val id: String = UUID.randomUUID().toString()
 )

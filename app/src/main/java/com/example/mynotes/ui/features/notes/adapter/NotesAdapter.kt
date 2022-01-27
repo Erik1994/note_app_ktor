@@ -59,26 +59,23 @@ class NotesAdapter(
             }
         }
 
-        fun bind(noteEntity: NoteEntity) {
-            itemNoteBinding.apply {
-                tvTitle.text = noteEntity.title
-                if (!noteEntity.isSynced) {
-                    ivSynced.setImageResource(R.drawable.ic_cross)
-                    tvSynced.text = root.context.getString(R.string.not_synced)
-                } else {
-                    ivSynced.setImageResource(R.drawable.ic_check)
-                    tvSynced.text = root.context.getString(R.string.synced)
-                }
-                tvDate.text = noteEntity.date.formatDate("dd.MM.yy, HH:mm")
-                val drawable =
-                    ResourcesCompat.getDrawable(root.resources, R.drawable.circle_shape, null)
-                drawable?.let {
-                    viewNoteColor.background =
-                        it.changeDrawableColor(Color.parseColor("#${noteEntity.color}"))
-                }
+        fun bind(noteEntity: NoteEntity) = with(itemNoteBinding) {
+            tvTitle.text = noteEntity.title
+            if (!noteEntity.isSynced) {
+                ivSynced.setImageResource(R.drawable.ic_cross)
+                tvSynced.text = root.context.getString(R.string.not_synced)
+            } else {
+                ivSynced.setImageResource(R.drawable.ic_check)
+                tvSynced.text = root.context.getString(R.string.synced)
+            }
+            tvDate.text = noteEntity.date.formatDate("dd.MM.yy, HH:mm")
+            val drawable =
+                ResourcesCompat.getDrawable(root.resources, R.drawable.circle_shape, null)
+            drawable?.let {
+                viewNoteColor.background =
+                    it.changeDrawableColor(Color.parseColor("#${noteEntity.color}"))
             }
         }
-
     }
 
 
