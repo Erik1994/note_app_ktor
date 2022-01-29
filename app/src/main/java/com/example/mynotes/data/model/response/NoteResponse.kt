@@ -5,5 +5,6 @@ data class NoteResponse(
     val content: String?,
     val date: Long?,
     val owners: List<String>?,
-    val color: String?
+    val color: String?,
+    val id: String?
 )

@@ -4,6 +4,7 @@ import com.example.mynotes.data.model.entity.NoteEntity
 import com.example.mynotes.data.model.request.NoteRequest
 import com.example.mynotes.data.model.response.NoteResponse
 import com.example.mynotes.ui.extensions.emptyString
+import java.util.*
 
 val NOTE_RESPONSE_TO_ENTITY_MAPPER = object : Mapper<NoteResponse, NoteEntity> {
     override fun map(source: NoteResponse): NoteEntity = NoteEntity(
@@ -11,7 +12,8 @@ val NOTE_RESPONSE_TO_ENTITY_MAPPER = object : Mapper<NoteResponse, NoteEntity> {
         source.content ?: emptyString(),
         source.date ?: 0L,
         source.owners ?: emptyList(),
-        source.color ?: emptyString()
+        source.color ?: emptyString(),
+        id = source.id ?: UUID.randomUUID().toString()
     )
 }
 

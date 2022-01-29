@@ -2,6 +2,7 @@ package com.example.mynotes.ui.features.addeditnote
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
@@ -127,6 +128,7 @@ class AddEditNoteFragment : BaseFragment(R.layout.fragment_add_edit_note) {
             val id = currentNote?.id ?: UUID.randomUUID().toString()
             val owners = currentNote?.owners ?: listOf(email)
             val note = NoteRequest(title, content, date, owners, color, id)
+            Log.d("TAGGGGGG", "saveNote: ${note.id}")
             viewModel.addNote(note)
         }
     }
