@@ -3,7 +3,6 @@ package com.example.mynotes.ui.features.di
 import com.example.mynotes.ui.features.addeditnote.AddEditNoteViewModel
 import com.example.mynotes.ui.features.auth.AuthViewModel
 import com.example.mynotes.ui.features.notedetail.NoteDetailViewModel
-import com.example.mynotes.ui.features.notes.NotesFragment
 import com.example.mynotes.ui.features.notes.NotesViewModel
 import com.example.mynotes.ui.features.notes.adapter.NotesAdapter
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -43,7 +42,8 @@ val featureModule = module {
             appDispatchers = get(),
             addNoteUseCase = get(),
             getNoteByIdUseCase = get(),
-            getEmailUseCase = get()
+            getEmailUseCase = get(),
+            insertNoteUseCase = get()
         )
     }
 }

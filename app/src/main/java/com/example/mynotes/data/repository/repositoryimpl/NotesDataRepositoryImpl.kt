@@ -22,6 +22,6 @@ class NotesDataRepositoryImpl(
             connectionManager = connectionManager,
             dbQuery = { localDataSource.getAllNotes() },
             apiCall = { remoteDataSource.getAllNotes() },
-            dbSaver = localDataSource::insertNotes
+            dbSaver = { noteEntityList  ->  localDataSource.insertNotes(noteEntityList.onEach{ it.isSynced = true})}
         )
 }

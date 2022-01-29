@@ -10,13 +10,8 @@ val domainModule = module {
     factory<CheckLoginUseCase> { CheckLoginUseCaseImpl(authDataRepository = get()) }
     factory<DeleteTokenUseCase> { DeleteTokenUseCaseImpl(notesDataRepository = get()) }
     factory<GetNotesUseCase> { GetNotesUseCaseImpl(notesDataRepository = get()) }
-    factory<AddNoteUseCase> {
-        AddNoteUseCaseImpl(
-            coroutineScope = get(),
-            appDispatchers = get(),
-            addEditNoteDataRepository = get()
-        )
-    }
+    factory<AddNoteUseCase> { AddNoteUseCaseImpl(addEditNoteDataRepository = get()) }
     factory<GetNoteByIdUseCase> { GetNoteByIdUseCaseImpl(addEditNoteDataRepository = get()) }
     factory<GetEmailUseCase> { GetEmailUseCaseImpl(addEditNoteDataRepository = get()) }
+    factory<InsertNoteUseCase> { InsertNoteUseCaseImpl(addEditNoteDataRepository = get()) }
 }

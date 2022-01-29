@@ -16,20 +16,18 @@ class NotesViewModel(
     private val deleteTokenUseCase: DeleteTokenUseCase,
     private val getNotesUseCase: GetNotesUseCase
 ) : BaseViewModel() {
-//    private val _notesSharedFlow = MutableSharedFlow<SingleLiveEvent<Resource<List<NoteEntity>>>>(
-//        replay = 1,
-//        onBufferOverflow = BufferOverflow.DROP_OLDEST
-//    )
     private val _forceUpdate = MutableStateFlow(false)
-    fun syncAllNotes() = viewModelScope.launch(appDispatchers.ioDispatcher) {
-            _forceUpdate.emit(true)
-        }
 
     private val _notesFlow = _forceUpdate.flatMapLatest {
         getNotesUseCase()
     }
 
-    val notesSharedFlow = _notesFlow.shareIn(viewModelScope, started = SharingStarted.Lazily, replay = 1)
+    val notesSharedFlow =
+        _notesFlow.shareIn(viewModelScope, started = SharingStarted.Lazily, replay = 1)
+
+    fun syncAllNotes() = viewModelScope.launch(appDispatchers.ioDispatcher) {
+        _forceUpdate.emit(true)
+    }
 
     fun deleteToken() = deleteTokenUseCase()
 }

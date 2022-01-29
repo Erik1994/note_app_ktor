@@ -13,10 +13,8 @@ import com.example.mynotes.data.repository.util.Resource
 import com.example.mynotes.databinding.FragmentAuthBinding
 import com.example.mynotes.ui.common.BaseFragment
 import com.example.mynotes.ui.extensions.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -45,7 +43,7 @@ class AuthFragment : BaseFragment(R.layout.fragment_auth) {
         observeClicks()
     }
 
-    private fun checkLoggedIn() = if(viewModel.isLoggedIn()) {
+    private fun checkLoggedIn() = if (viewModel.isLoggedIn()) {
         Log.d("TOKENTAG", "IsLogged: ${viewModel.isLoggedIn()}")
         findNavController().navigate(AuthFragmentDirections.actionAuthFragmentToNotesFragment())
     } else Unit
@@ -97,8 +95,8 @@ class AuthFragment : BaseFragment(R.layout.fragment_auth) {
 
     @ExperimentalCoroutinesApi
     @FlowPreview
-    private fun observeClicks() = binding?.let{ binding ->
-        with(binding) {
+    private fun observeClicks() {
+        binding?.apply {
             btnRegister.debounceClicks()
                 .onEach {
                     val email = etRegisterEmail.text.toString()
@@ -109,8 +107,7 @@ class AuthFragment : BaseFragment(R.layout.fragment_auth) {
                         password,
                         confirmedPassword
                     )
-                }.flowOn(Dispatchers.Main.immediate)
-                .launchIn(viewLifecycleOwner.lifecycleScope)
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
 
             btnLogin.debounceClicks()
                 .onEach {
@@ -120,8 +117,7 @@ class AuthFragment : BaseFragment(R.layout.fragment_auth) {
                         email,
                         password
                     )
-                }.flowOn(Dispatchers.Main.immediate)
-                .launchIn(viewLifecycleOwner.lifecycleScope)
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
         }
     }
 }

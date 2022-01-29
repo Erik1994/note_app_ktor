@@ -20,9 +20,7 @@ import com.example.mynotes.ui.extensions.collectLifeCycleFlow
 import com.example.mynotes.ui.extensions.debounceClicks
 import com.example.mynotes.ui.extensions.showSnackbar
 import com.example.mynotes.ui.features.dialog.ColorPickerDialogFragment
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -74,7 +72,7 @@ class AddEditNoteFragment : BaseFragment(R.layout.fragment_add_edit_note) {
     private fun observeData() {
         collectLifeCycleFlow(viewModel.noteSharedFlow) {
             it.getContentIfNotHandled()?.let { result ->
-                when(result) {
+                when (result) {
                     is Resource.Error -> {
                         showSnackbar(result.message ?: getString(R.string.note_not_found))
                     }
@@ -102,26 +100,30 @@ class AddEditNoteFragment : BaseFragment(R.layout.fragment_add_edit_note) {
                 changeNoteColor(it)
             }
         }
-    }
-
-    @FlowPreview
-    private fun observeClicks() = binding?.let {
-        with(it) {
-            viewNoteColor.debounceClicks()
-                .onEach {
-                    ColorPickerDialogFragment().show(parentFragmentManager, COLOR_PICKER_DIALOG_TAG)
-                }.flowOn(Dispatchers.Main.immediate)
-                .launchIn(viewLifecycleOwner.lifecycleScope)
+        collectLifeCycleFlow(viewModel.navigateNotesFragmentSharedFlow) {
+            if (it) {
+                viewModel.navigate(AddEditNoteFragmentDirections.actionAddEditNoteFragmentToNotesFragment())
+            }
         }
     }
 
-    private fun saveNote() = binding?.let let@{ binding ->
-        with(binding) {
+    @FlowPreview
+    private fun observeClicks() {
+        binding?.apply {
+            viewNoteColor.debounceClicks()
+                .onEach {
+                    ColorPickerDialogFragment().show(parentFragmentManager, COLOR_PICKER_DIALOG_TAG)
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
+        }
+    }
+
+    private fun saveNote() {
+        binding?.apply {
             val email = viewModel.getEmail()
             val title = etNoteTitle.text.toString()
             val content = etNoteContent.text.toString()
             if (title.isEmpty() || content.isEmpty()) {
-                return@let
+                return
             }
             val date = System.currentTimeMillis()
             val color = currentNoteColor
@@ -139,10 +141,9 @@ class AddEditNoteFragment : BaseFragment(R.layout.fragment_add_edit_note) {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.save -> {
                 saveNote()
-                //viewModel.navigate(AddEditNoteFragmentDirections.actionAddEditNoteFragmentToNotesFragment())
             }
         }
         return super.onOptionsItemSelected(item)

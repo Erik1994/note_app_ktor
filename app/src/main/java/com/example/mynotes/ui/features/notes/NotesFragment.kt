@@ -12,15 +12,13 @@ import com.example.mynotes.ui.extensions.collectLifeCycleFlow
 import com.example.mynotes.ui.extensions.debounceClicks
 import com.example.mynotes.ui.extensions.showSnackbar
 import com.example.mynotes.ui.features.notes.adapter.NotesAdapter
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class NotesFragment: BaseFragment(R.layout.fragment_notes) {
+class NotesFragment : BaseFragment(R.layout.fragment_notes) {
     private var binding: FragmentNotesBinding? = null
     override val viewModel: NotesViewModel by viewModel()
     private val notesAdapter: NotesAdapter = get()
@@ -31,7 +29,7 @@ class NotesFragment: BaseFragment(R.layout.fragment_notes) {
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
-        if(binding == null) {
+        if (binding == null) {
             binding = FragmentNotesBinding.inflate(layoutInflater, container, false)
         }
         return binding?.root
@@ -50,7 +48,7 @@ class NotesFragment: BaseFragment(R.layout.fragment_notes) {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.logout -> {
                 viewModel.deleteToken()
                 logOut()
@@ -62,7 +60,7 @@ class NotesFragment: BaseFragment(R.layout.fragment_notes) {
     private fun observeData() {
         binding?.apply {
             collectLifeCycleFlow(viewModel.notesSharedFlow) { event ->
-                val  result = event.peekContent()
+                val result = event.peekContent()
                 when (result) {
                     is Resource.Error -> {
                         event.getContentIfNotHandled()?.let {
@@ -91,27 +89,32 @@ class NotesFragment: BaseFragment(R.layout.fragment_notes) {
     }
 
     @FlowPreview
-    private fun observeClicks() = binding?.let { binding ->
-        with(binding) {
-//            fabAddNote.debounceClicks()
-//                .onEach {
-//                    viewModel.navigate(NotesFragmentDirections.actionNotesFragmentToAddEditNoteFragment(""))
-//                }.flowOn(Dispatchers.Main.immediate)
-//                .launchIn(viewLifecycleOwner.lifecycleScope)
-            collectLifeCycleFlow(fabAddNote.debounceClicks()) {
-                viewModel.navigate(NotesFragmentDirections.actionNotesFragmentToAddEditNoteFragment(""))
-            }
+    private fun observeClicks() {
+        binding?.apply {
+            fabAddNote.debounceClicks()
+                .onEach {
+                    viewModel.navigate(
+                        NotesFragmentDirections.actionNotesFragmentToAddEditNoteFragment(
+                            ""
+                        )
+                    )
+                }.launchIn(viewLifecycleOwner.lifecycleScope)
         }
         notesAdapter.clicksFlow()
             .onEach {
-                viewModel.navigate(NotesFragmentDirections.actionNotesFragmentToNoteDetailFragment(it.id))
-            }.flowOn(Dispatchers.Main.immediate)
-            .launchIn(this.viewLifecycleOwner.lifecycleScope)
+                viewModel.navigate(
+                    NotesFragmentDirections.actionNotesFragmentToNoteDetailFragment(
+                        it.id
+                    )
+                )
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun initRv() = binding?.rvNotes?.apply {
-        adapter = notesAdapter
-        layoutManager = LinearLayoutManager(requireContext())
-        hasFixedSize()
+    private fun initRv() {
+        binding?.rvNotes?.apply {
+            adapter = notesAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+            hasFixedSize()
+        }
     }
 }
