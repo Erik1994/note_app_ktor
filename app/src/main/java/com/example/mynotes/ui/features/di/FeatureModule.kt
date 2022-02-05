@@ -29,7 +29,10 @@ val featureModule = module {
         NotesViewModel(
             deleteTokenUseCase = get(),
             appDispatchers = get(),
-            getNotesUseCase = get()
+            getNotesUseCase = get(),
+            deleteNoteUseCase = get(),
+            insertNoteUseCase = get(),
+            addNoteUseCase = get()
         )
     }
 

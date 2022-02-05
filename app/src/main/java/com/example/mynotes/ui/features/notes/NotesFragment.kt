@@ -1,9 +1,12 @@
 package com.example.mynotes.ui.features.notes
 
+import android.graphics.Canvas
 import android.os.Bundle
 import android.view.*
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mynotes.R
 import com.example.mynotes.data.repository.util.Resource
 import com.example.mynotes.databinding.FragmentNotesBinding
@@ -22,6 +25,42 @@ class NotesFragment : BaseFragment(R.layout.fragment_notes) {
     private var binding: FragmentNotesBinding? = null
     override val viewModel: NotesViewModel by viewModel()
     private val notesAdapter: NotesAdapter = get()
+    private val itemTouchHelperCallBack = object : ItemTouchHelper.SimpleCallback(
+        0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+    ) {
+        override fun onChildDraw(
+            c: Canvas,
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            dX: Float,
+            dY: Float,
+            actionState: Int,
+            isCurrentlyActive: Boolean
+        ) {
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+            if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                binding?.swipeRefreshLayout?.isEnabled = !isCurrentlyActive
+            }
+        }
+
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean = true
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val position = viewHolder.layoutPosition
+            val note = notesAdapter.currentList[position]
+            viewModel.deleteNoteById(note.id)
+            showSnackbar(
+                getString(R.string.note_deleted_message), getString(R.string.undo)
+            ) {
+                viewModel.addNote(note)
+                viewModel.deleteLocallyDeletedNoteId(note.id)
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -115,6 +154,7 @@ class NotesFragment : BaseFragment(R.layout.fragment_notes) {
             adapter = notesAdapter
             layoutManager = LinearLayoutManager(requireContext())
             hasFixedSize()
+            ItemTouchHelper(itemTouchHelperCallBack).attachToRecyclerView(this)
         }
     }
 }

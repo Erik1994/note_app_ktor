@@ -15,4 +15,6 @@
     <string name="choose_color"> Choose a color</string>
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
+    <string name="note_deleted_message">Note was successfully deleted</string>
+    <string name="undo">Undo</string>
 </resources>

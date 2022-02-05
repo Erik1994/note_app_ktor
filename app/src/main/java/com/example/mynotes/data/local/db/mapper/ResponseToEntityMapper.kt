@@ -36,3 +36,14 @@ val NOTE_REQUEST_TO_ENTITY_MAPPER = object : Mapper<NoteRequest, NoteEntity> {
         id = source.id
     )
 }
+
+val NOTE_ENTITY_TO_REQUEST_MAPPER = object : Mapper<NoteEntity, NoteRequest> {
+    override fun map(source: NoteEntity): NoteRequest  = NoteRequest(
+        source.title,
+        source.content,
+        source.date,
+        source.owners,
+        source.color,
+        id = source.id
+    )
+}
