@@ -15,4 +15,5 @@ val domainModule = module {
     factory<GetEmailUseCase> { GetEmailUseCaseImpl(addEditNoteDataRepository = get()) }
     factory<InsertNoteUseCase> { InsertNoteUseCaseImpl(addEditNoteDataRepository = get()) }
     factory<DeleteNoteUseCase> { DeleteNoteUseCaseImpl(notesDataRepository = get()) }
+    factory<ObserveNoteByIdUseCase> { ObserveNoteByIdUseCaseImpl(notesDetailDataRepository = get()) }
 }
