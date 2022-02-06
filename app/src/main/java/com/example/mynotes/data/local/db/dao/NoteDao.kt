@@ -22,6 +22,9 @@ interface NoteDao {
     @Query("DELETE FROM $NOTE_TABLE_NAME WHERE id = :noteId")
     suspend fun deleteNoteByID(noteId: String)
 
+    @Query("DELETE FROM $NOTE_TABLE_NAME")
+    suspend fun deleteAllNotes()
+
     @Query("DELETE FROM $NOTE_TABLE_NAME WHERE isSynced = 1")
     suspend fun deleteAllSyncedNotes()
 

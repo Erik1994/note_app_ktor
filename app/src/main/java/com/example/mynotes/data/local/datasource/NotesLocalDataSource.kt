@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface NotesLocalDataSource {
     fun deleteToken()
     fun getAllNotes(): Flow<List<NoteEntity>>
+    suspend fun deleteAllNotes()
     suspend fun deleteNoteByID(noteId: String)
     suspend fun insertNotes(notes: List<NoteEntity>)
     suspend fun insertDeletedNoteId(locallyDeletedNoteId: LocallyDeletedNoteId)

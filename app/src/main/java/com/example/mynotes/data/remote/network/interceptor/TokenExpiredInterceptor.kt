@@ -8,6 +8,7 @@ import com.example.mynotes.data.local.TOKEN_KEY
 import com.example.mynotes.data.remote.UNAUTHORIZED_CODE
 import com.example.mynotes.data.repository.util.EventManager
 import com.example.mynotes.data.repository.util.Events
+import com.example.mynotes.ui.extensions.emptyString
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import okhttp3.Interceptor
@@ -24,7 +25,7 @@ class TokenExpiredInterceptor(
         val request: Request = chain.request().newBuilder().build()
         val response: Response = chain.proceed(request)
         if (response.code == UNAUTHORIZED_CODE) {
-            sharedPreferences.put(TOKEN_KEY, "")
+            sharedPreferences.put(TOKEN_KEY, emptyString())
             sendLogOutEvent(eventManager, context.getString(R.string.token_expire_message))
         }
         return response

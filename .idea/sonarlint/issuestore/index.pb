@@ -15,14 +15,10 @@ v
 Fapp/src/main/java/com/example/mynotes/ui/navigation/SingleLiveEvent.kt,5/c/5c0c0b296ee0a4a36bc2f4e32226c12400808c0f
 w
 Gapp/src/main/java/com/example/mynotes/domain/usecase/GetNotesUseCase.kt,7/f/7f92667e7d1e87a4855f26acfe42104732ed3a53
-t
-Dapp/src/main/java/com/example/mynotes/data/local/db/mapper/Mapper.kt,7/2/72a833fc3fb4fc535aebf921b2ca353fd1d0e068
 ƒ
 Sapp/src/main/java/com/example/mynotes/ui/features/notedetail/NoteDetailViewModel.kt,7/e/7e99cc2e1e910673e756a4b0ffcdbd2eb44828b2
 •
 eapp/src/main/java/com/example/mynotes/data/repository/repositoryimpl/NotesDetailDataRepositoryImpl.kt,8/3/83c15cf56ee910f32ff402c400360a1e9dcb1a42
-
-Oapp/src/main/java/com/example/mynotes/ui/features/notes/adapter/NotesAdapter.kt,b/1/b1c14fc6ea7969a4de99c617d902893edbb7335c
 u
 Eapp/src/main/java/com/example/mynotes/ui/extensions/ViewExtensions.kt,c/1/c1b987c580e221f8fbeeb4e800a5886bc13c3ba5
 ‚

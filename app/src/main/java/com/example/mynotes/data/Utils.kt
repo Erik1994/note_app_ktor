@@ -18,5 +18,5 @@ fun emailPassValidation(
 } else if (isRegistr && password != repeatetPassword) {
     context.getString(R.string.passwords_mismatch_message)
 } else {
-    ""
+    emptyString()
 }

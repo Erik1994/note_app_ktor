@@ -7,13 +7,14 @@ import com.example.mynotes.data.local.datasource.NotesLocalDataSource
 import com.example.mynotes.data.local.db.dao.NoteDao
 import com.example.mynotes.data.model.entity.LocallyDeletedNoteId
 import com.example.mynotes.data.model.entity.NoteEntity
+import com.example.mynotes.ui.extensions.emptyString
 import kotlinx.coroutines.flow.Flow
 
 class NotesLocalDataSourceImpl(
     private val noteDao: NoteDao,
     private val sharedPreferences: SharedPreferences
 ) : NotesLocalDataSource {
-    override fun deleteToken() = sharedPreferences.put(TOKEN_KEY, "")
+    override fun deleteToken() = sharedPreferences.put(TOKEN_KEY, emptyString())
 
     override fun getAllNotes(): Flow<List<NoteEntity>> = noteDao.getAllNotes()
 
@@ -27,6 +28,8 @@ class NotesLocalDataSourceImpl(
 
     override suspend fun getAllLocallyDeletedNoteIds(): List<LocallyDeletedNoteId> =
         noteDao.getAllLocallyDeletedNoteIds()
+
+    override suspend fun deleteAllNotes() = noteDao.deleteAllNotes()
 
     override suspend fun deleteNoteByID(noteId: String) = noteDao.deleteNoteByID(noteId)
 

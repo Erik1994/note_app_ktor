@@ -13,6 +13,7 @@ import com.example.mynotes.databinding.FragmentNotesBinding
 import com.example.mynotes.ui.common.BaseFragment
 import com.example.mynotes.ui.extensions.collectLifeCycleFlow
 import com.example.mynotes.ui.extensions.debounceClicks
+import com.example.mynotes.ui.extensions.emptyString
 import com.example.mynotes.ui.extensions.showSnackbar
 import com.example.mynotes.ui.features.notes.adapter.NotesAdapter
 import kotlinx.coroutines.FlowPreview
@@ -77,6 +78,7 @@ class NotesFragment : BaseFragment(R.layout.fragment_notes) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRv()
+        setClickListeners()
         observeData()
         observeClicks()
     }
@@ -127,6 +129,12 @@ class NotesFragment : BaseFragment(R.layout.fragment_notes) {
         }
     }
 
+    private fun setClickListeners() {
+        binding?.swipeRefreshLayout?.setOnRefreshListener {
+            viewModel.syncAllNotes()
+        }
+    }
+
     @FlowPreview
     private fun observeClicks() {
         binding?.apply {
@@ -134,7 +142,7 @@ class NotesFragment : BaseFragment(R.layout.fragment_notes) {
                 .onEach {
                     viewModel.navigate(
                         NotesFragmentDirections.actionNotesFragmentToAddEditNoteFragment(
-                            ""
+                            emptyString()
                         )
                     )
                 }.launchIn(viewLifecycleOwner.lifecycleScope)

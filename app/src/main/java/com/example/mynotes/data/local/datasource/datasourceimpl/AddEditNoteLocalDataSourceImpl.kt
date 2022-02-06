@@ -6,6 +6,7 @@ import com.example.mynotes.data.local.EMAIL_KEY
 import com.example.mynotes.data.local.datasource.AddEditNoteLocalDataSource
 import com.example.mynotes.data.local.db.dao.NoteDao
 import com.example.mynotes.data.model.entity.NoteEntity
+import com.example.mynotes.ui.extensions.emptyString
 
 class AddEditNoteLocalDataSourceImpl(
     private val noteDao: NoteDao,
@@ -13,5 +14,5 @@ class AddEditNoteLocalDataSourceImpl(
 ) : AddEditNoteLocalDataSource {
     override suspend fun insertNote(note: NoteEntity) = noteDao.insertNote(note)
     override suspend fun getNoteById(id: String): NoteEntity? = noteDao.getNoteById(id)
-    override fun getEmail(): String = sharedPreferences.get(EMAIL_KEY, "")
+    override fun getEmail(): String = sharedPreferences.get(EMAIL_KEY, emptyString())
 }
