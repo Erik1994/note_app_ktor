@@ -20,5 +20,6 @@ sealed class Resource<out T> {
 }
 
 sealed class Events {
-    data class LogOutEvent(val message: String = emptyString()) : Events()
+    object LogOutEvent : Events()
+    object TokenExpiredEvent: Events()
 }

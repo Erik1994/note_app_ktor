@@ -18,6 +18,8 @@
     <string name="cancel">Cancel</string>
     <string name="note_deleted_message">Note was successfully deleted</string>
     <string name="undo">Undo</string>
+    <string name="token_expired_dialog_title">Token Expired</string>
+    <string name="token_expired_dialog_message">Your token has expired. You will be logged out.</string>
     <string name="add_owner_success_message">Successfully added owner to note</string>
     <string name="owner_empty_error_message">The owner can\'t be empty</string>
     <string name="add_owner_dialog_title">Add Owner to Note</string>

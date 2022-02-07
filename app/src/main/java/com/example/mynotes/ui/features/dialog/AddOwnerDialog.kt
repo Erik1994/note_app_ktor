@@ -2,18 +2,12 @@ package com.example.mynotes.ui.features.dialog
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.widget.EditText
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import com.example.mynotes.R
-import com.example.mynotes.ui.features.addeditnote.AddEditNoteViewModel
 import com.example.mynotes.ui.features.notedetail.NoteDetailViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputLayout
-import com.skydoves.colorpickerview.ColorEnvelope
-import com.skydoves.colorpickerview.ColorPickerDialog
-import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class AddOwnerDialog : DialogFragment() {

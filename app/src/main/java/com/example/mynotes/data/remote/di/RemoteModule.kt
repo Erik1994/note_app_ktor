@@ -49,7 +49,6 @@ fun remoteModule(baseUrl: String) = module {
         return@single TokenExpiredInterceptor(
             eventManager = get(),
             coroutineScope = get(),
-            context = get(),
             sharedPreferences = get()
         )
     }

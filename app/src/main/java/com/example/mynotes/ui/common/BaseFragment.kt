@@ -7,10 +7,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.mynotes.data.repository.util.EventManager
 import com.example.mynotes.data.repository.util.Events
+import com.example.mynotes.ui.TOKEN_EXPIRED_DIALOG_TAG
 import com.example.mynotes.ui.extensions.collectLifeCycleFlow
-import com.example.mynotes.ui.extensions.emptyString
-import com.example.mynotes.ui.extensions.showSnackbar
 import com.example.mynotes.ui.features.auth.AuthFragmentDirections
+import com.example.mynotes.ui.features.dialog.TokenExpiredDialog
 import com.example.mynotes.ui.features.notes.NotesFragmentDirections
 import com.example.mynotes.ui.navigation.NavigationCommand
 import org.koin.android.ext.android.inject
@@ -28,6 +28,16 @@ abstract class BaseFragment(layoutId: Int) : Fragment(layoutId) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeNavigation()
+
+        // for screen rotation
+        if (savedInstanceState != null) {
+            val tokenExpiredDialog = parentFragmentManager.findFragmentByTag(
+                TOKEN_EXPIRED_DIALOG_TAG
+            ) as TokenExpiredDialog?
+            tokenExpiredDialog?.positiveListener = {
+                findNavController().navigate(AuthFragmentDirections.actionGlobalAuthFragment())
+            }
+        }
     }
 
     private fun observeNavigation() {
@@ -42,15 +52,25 @@ abstract class BaseFragment(layoutId: Int) : Fragment(layoutId) {
         }
 
         collectLifeCycleFlow(eventManager.event) { event ->
-            when (event) {
-                is Events.LogOutEvent -> logOut(event.message)
+            event?.let {
+                eventManager.sendEvent(null)
+                logOut(it)
             }
         }
     }
 
-    protected fun logOut(eventMessage: String = emptyString()) =
-        eventMessage.takeIf { it.isNotEmpty() }?.let {
-            showSnackbar(it)
-            viewModel.navigate(AuthFragmentDirections.actionGlobalAuthFragment())
-        } ?: viewModel.navigate(NotesFragmentDirections.actionNotesFragmentToAuthFragment())
+    protected fun logOut(events: Events = Events.LogOutEvent) {
+        when (events) {
+            is Events.LogOutEvent -> viewModel.navigate(NotesFragmentDirections.actionNotesFragmentToAuthFragment())
+            is Events.TokenExpiredEvent -> showTokenExpiredDialog()
+        }
+    }
+
+    private fun showTokenExpiredDialog() {
+        TokenExpiredDialog().apply {
+            positiveListener = {
+                findNavController().navigate(AuthFragmentDirections.actionGlobalAuthFragment())
+            }
+        }.show(parentFragmentManager, TOKEN_EXPIRED_DIALOG_TAG)
+    }
 }

@@ -20,6 +20,7 @@
         <entry key="app/src/main/res/layout/fragment_note_detail.xml" value="0.22010869565217392" />
         <entry key="app/src/main/res/layout/fragment_notes.xml" value="0.22010869565217392" />
         <entry key="app/src/main/res/layout/item_note.xml" value="0.22010869565217392" />
+        <entry key="app/src/main/res/layout/token_expired.xml" value="0.21603260869565216" />
         <entry key="app/src/main/res/menu/menu_add_owner.xml" value="0.3182291666666667" />
         <entry key="app/src/main/res/menu/menu_apply.xml" value="0.3328125" />
         <entry key="app/src/main/res/menu/menu_notes.xml" value="0.3328125" />

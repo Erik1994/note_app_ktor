@@ -32,6 +32,7 @@ class AddEditNoteFragment : BaseFragment(R.layout.fragment_add_edit_note) {
     private val args: AddEditNoteFragmentArgs by navArgs()
     private var currentNote: NoteEntity? = null
     private var currentNoteColor = DEFAULT_NOTE_COLOR
+    private var menu: Menu? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -97,12 +98,22 @@ class AddEditNoteFragment : BaseFragment(R.layout.fragment_add_edit_note) {
         collectLifeCycleFlow(viewModel.colorSharedFlow) { color ->
             color?.let {
                 changeNoteColor(it)
+                changeSaveButtonColor(it)
             }
         }
         collectLifeCycleFlow(viewModel.navigateNotesFragmentSharedFlow) {
             if (it) {
                 viewModel.navigate(AddEditNoteFragmentDirections.actionAddEditNoteFragmentToNotesFragment())
             }
+        }
+    }
+
+    private fun changeSaveButtonColor(color: String) {
+        val drawable =
+            ResourcesCompat.getDrawable(resources, R.drawable.ic_save, null)
+        drawable?.let {
+            val newIcon = it.changeDrawableColor(Color.parseColor("#${color}"))
+            menu?.getItem(0)?.setIcon(newIcon)
         }
     }
 
@@ -137,6 +148,7 @@ class AddEditNoteFragment : BaseFragment(R.layout.fragment_add_edit_note) {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_apply, menu)
+        this.menu = menu
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

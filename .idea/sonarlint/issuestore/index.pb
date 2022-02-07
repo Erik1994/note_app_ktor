@@ -1,16 +1,10 @@
 
-z
-Japp/src/main/java/com/example/mynotes/data/repository/util/EventManager.kt,c/6/c61587f1f526a8553a374da134b2efc7eb666f02
-e
-5app/src/main/java/com/example/mynotes/di/AppModule.kt,8/a/8a6a4920cff1daf5463e84b3690c2b6b0957b127
 d
 4app/src/main/java/com/example/mynotes/di/DIModule.kt,4/b/4ba31ab5ddbc0ec6c11dfa878e8870d13def1d6d
 w
 Gapp/src/main/java/com/example/mynotes/domain/usecase/GetNotesUseCase.kt,7/f/7f92667e7d1e87a4855f26acfe42104732ed3a53
 q
 Aapp/src/main/java/com/example/mynotes/ui/activity/MainActivity.kt,9/8/9890f93689f12371c473d8c3829c054e81ccacc6
-u
-Eapp/src/main/java/com/example/mynotes/data/model/entity/NoteEntity.kt,3/6/3657a4be9d3a08640ce57ccd9c64cbe9260226bb
 }
 Mapp/src/main/java/com/example/mynotes/data/model/request/DeleteNoteRequest.kt,5/9/599daf2f5427397616d24614d17202a4b8560d47
 z
@@ -41,8 +35,6 @@ r
 Bapp/src/main/java/com/example/mynotes/data/local/db/AppDatabase.kt,a/b/ab0622631074be029762dac60d109a3421b870aa
 Ü
 Vapp/src/main/java/com/example/mynotes/domain/usecase/usecaseimpl/AddNoteUseCaseImpl.kt,2/4/2479dba052c61721051531ecd129732dbacb2b1c
-
-Oapp/src/main/java/com/example/mynotes/ui/features/notes/adapter/NotesAdapter.kt,b/1/b1c14fc6ea7969a4de99c617d902893edbb7335c
 z
 Japp/src/main/java/com/example/mynotes/domain/dispatchers/AppDispatchers.kt,2/0/20f476e4468ed47d7b03bc48a6e1a85ccd78ef0f
 è
@@ -57,8 +49,6 @@ Dapp/src/main/java/com/example/mynotes/data/local/db/mapper/Mapper.kt,7/2/72a83
 Tapp/src/main/java/com/example/mynotes/data/local/db/mapper/ResponseToEntityMapper.kt,d/2/d2b9a1332d96dd43ad156f365d19ae44df89d506
 É
 Sapp/src/main/java/com/example/mynotes/data/local/datasource/NotesLocalDataSource.kt,8/f/8f224c1405eba2c703062a2c4a416074559f150b
-ê
-`app/src/main/java/com/example/mynotes/data/remote/network/interceptor/TokenExpiredInterceptor.kt,2/a/2a66898b1f568f833b804dd1145f28a35a0ae3ad
 ñ
 fapp/src/main/java/com/example/mynotes/data/local/datasource/datasourceimpl/NotesLocalDataSourceImpl.kt,b/d/bd2dca6f86cb7f818f620ab99d5419968acebdae
 ò
