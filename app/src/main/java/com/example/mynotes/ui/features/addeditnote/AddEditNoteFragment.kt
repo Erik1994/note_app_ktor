@@ -92,7 +92,6 @@ class AddEditNoteFragment : BaseFragment(R.layout.fragment_add_edit_note) {
                         /* NO-OP */
                     }
                 }
-
             }
         }
         collectLifeCycleFlow(viewModel.colorSharedFlow) { color ->
@@ -142,9 +141,7 @@ class AddEditNoteFragment : BaseFragment(R.layout.fragment_add_edit_note) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.save -> {
-                saveNote()
-            }
+            R.id.save -> saveNote()
         }
         return super.onOptionsItemSelected(item)
     }

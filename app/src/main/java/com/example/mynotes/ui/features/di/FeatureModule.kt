@@ -37,7 +37,11 @@ val featureModule = module {
     }
 
     viewModel {
-        NoteDetailViewModel(observeNoteByIdUseCase = get())
+        NoteDetailViewModel(
+            observeNoteByIdUseCase = get(),
+            addOwnerUseCase = get(),
+            appDispatchers = get()
+        )
     }
 
     viewModel {

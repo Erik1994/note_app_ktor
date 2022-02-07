@@ -21,6 +21,7 @@ class AuthDataRepositoryImpl(
     private val remoteDataSource: AuthRemoteDataSource,
     private val localDataSource: AuthLocalDataSource
 ) : AuthDataRepository {
+
     override fun register(accountRequest: AccountRequest): Flow<Resource<SimpleData>> = flow {
         val context = connectionManager.context
         val validationMessage = emailPassValidation(
@@ -49,11 +50,10 @@ class AuthDataRepositoryImpl(
                     )
                 }
             } catch (e: Exception) {
-                emit(Resource.Error(getErrorMessage(context, e), null))
+                emit(Resource.Error(connectionManager.getErrorMessage(context, e), null))
             }
         }
     }
-
     override fun login(accountRequest: AccountRequest): Flow<Resource<SimpleData>> = flow {
         val context = connectionManager.context
         val validationMessage = emailPassValidation(
@@ -87,17 +87,10 @@ class AuthDataRepositoryImpl(
                     )
                 }
             } catch (e: Exception) {
-                emit(Resource.Error(getErrorMessage(context, e), null))
+                emit(Resource.Error(connectionManager.getErrorMessage(context, e), null))
             }
         }
     }
 
     override fun isLoggedIn(): Boolean = localDataSource.isLoggedIn()
-
-    private fun getErrorMessage(context: Context, e: Exception) =
-        if (connectionManager.checkNetworkConnection()) {
-            e.message
-        } else {
-            context.getString(R.string.internet_connection_error)
-        }
 }

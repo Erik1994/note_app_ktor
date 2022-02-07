@@ -3,6 +3,7 @@ package com.example.mynotes.data.repository.util
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import com.example.mynotes.R
 
 class ConnectionManager(val context: Context) {
 
@@ -18,4 +19,11 @@ class ConnectionManager(val context: Context) {
             else -> false
         }
     }
+
+    fun getErrorMessage(context: Context, e: Exception) =
+        if (checkNetworkConnection()) {
+            e.message
+        } else {
+            context.getString(R.string.internet_connection_error)
+        }
 }
